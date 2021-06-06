@@ -37,12 +37,14 @@ for (let i = 0; i < 16; i++) {
     let randColor = colors[randColIdx];
     colors.splice(randColIdx, 1);
     cell.setAttribute("color", randColor);
+    cell.setAttribute("id", i);
     // cell.style.backgroundColor = randColor;
 
     //push an object containing the cell info in the db array
     let cellDet = {
-        id: i + 1,
+        id: i,
         color: randColor,
+        found: false,
     };
     cellObj.push(cellDet);
     grid.appendChild(cell);
@@ -83,27 +85,43 @@ strtBtn.addEventListener("click", function () {
 
 let clickNo = 0;
 let currColor = "none";
+let firstClickElem;
 function handleCellClick(e) {
     let currElem = e.currentTarget;
     let clickedColor = currElem.getAttribute("color");
-
+    let clickedId = currElem.getAttribute("id");
     //First click
     if (clickNo == 0) {
+        //save first clicked elem
+        firstClickElem = currElem;
+        //save first clicked color
         currColor = clickedColor;
+        //change color on ui
+        currElem.style.backgroundColor = clickedColor;
         clickNo = 1;
     }
 
     //Match on the second color
     else if (clickNo == 1) {
+        //Check for a match
         if (clickedColor == currColor) {
+            currElem.style.backgroundColor = clickedColor; //change color on ui
+            let firstId = firstClickElem.getAttribute("id"); //get the id of element we were mathing with
+            cellObj[firstId].found = true; //set found true for both
+            cellObj[clickedId].found = true;
             console.log("matched");
-            clickNo = 0;
+            clickNo = 0; //reset click counter
         } else {
+            currElem.style.backgroundColor = clickedColor;
+            setTimeout(function () {
+                firstClickElem.style.backgroundColor = "gray";
+                currElem.style.backgroundColor = "gray";
+            }, 500);
             console.log("not a match");
             currColor = "none";
             clickNo = 0;
         }
     }
-    console.log(clickedColor);
-    console.log(currColor);
+
+    console.log(cellObj);
 }
