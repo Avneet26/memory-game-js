@@ -8,13 +8,17 @@ body {
 }
 .grid {
     display: flex;
+    height: 450px;
     width: 450px;
     flex-wrap: wrap;
+    background-color: lavender;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px;
 }
 .grid-cell {
     height: 100px;
     width: 100px;
     background-color: gray;
-    margin: 2px;
-    
+    cursor: pointer;    
 }
