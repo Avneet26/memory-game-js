@@ -1,5 +1,6 @@
 let grid = document.querySelector(".grid");
 let strtBtn = document.querySelector(".start-btn");
+let btnCont = document.querySelector(".btns");
 let allCells;
 let show = false;
 let gameRunning = false;
@@ -81,11 +82,11 @@ strtBtn.addEventListener("click", function () {
             }
         } else {
             for (let i = 0; i < 16; i++) {
-                allCells[i].style.backgroundColor = "gray";
+                allCells[i].style.backgroundColor = "rgb(180, 180, 180)";
             }
         }
         startTimer();
-    }, 1500);
+    }, 2000);
 });
 
 let clickNo = 0;
@@ -110,6 +111,8 @@ function handleCellClick(e) {
         //Match on the second color
         else if (clickNo == 1) {
             //Check for a match
+            //if -> match
+            //else -> not a match
             if (clickedColor == currColor) {
                 currElem.style.backgroundColor = clickedColor; //change color on ui
                 let firstId = firstClickElem.getAttribute("id"); //get the id of element we were mathing with
@@ -119,9 +122,11 @@ function handleCellClick(e) {
                 clickNo = 0; //reset click counter
             } else {
                 currElem.style.backgroundColor = clickedColor;
+                gameRunning = false; //disable click for the time
                 setTimeout(function () {
-                    firstClickElem.style.backgroundColor = "gray";
-                    currElem.style.backgroundColor = "gray";
+                    firstClickElem.style.backgroundColor = "rgb(180, 180, 180)"; //after some time reset both cells
+                    currElem.style.backgroundColor = "rgb(180, 180, 180)";
+                    gameRunning = true; //enable click again after the reset of colors
                 }, 500);
                 console.log("not a match");
                 currColor = "none";
@@ -132,8 +137,8 @@ function handleCellClick(e) {
         //after every click check if game is over
         if (isGameOver()) {
             console.log("gameOver");
-            strtBtn.removeAttribute("disabled");
-            strtBtn.innerText = "Well Played";
+            addReplayBtn();
+            strtBtn.remove();
             gameRunning = false;
             stopTimer();
         }
@@ -152,4 +157,15 @@ function isGameOver() {
         }
     }
     return true;
+}
+
+function addReplayBtn() {
+    let replayBtn = document.createElement("button");
+    replayBtn.innerText = "Replay";
+    replayBtn.classList.add("btn");
+    replayBtn.classList.add("start-btn");
+    btnCont.appendChild(replayBtn);
+    replayBtn.addEventListener("click", function () {
+        window.location.reload();
+    });
 }
