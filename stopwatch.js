@@ -1,4 +1,13 @@
 const timer = document.querySelector(".timer");
+let time = "";
+let myStorage = window.localStorage;
+let startArr = [];
+let ScoreArr;
+if (myStorage.getItem("prevBrainScores") == null) {
+    myStorage.setItem("prevBrainScores", JSON.stringify(startArr));
+} else {
+    ScoreArr = JSON.parse(localStorage.getItem("prevBrainScores"));
+}
 
 var hr = 0;
 var min = 0;
@@ -6,7 +15,7 @@ var sec = 0;
 var stoptime = true;
 
 function startTimer() {
-    if (stoptime == true) {
+    if (stoptime) {
         stoptime = false;
         timerCycle();
     }
@@ -15,6 +24,10 @@ function stopTimer() {
     if (stoptime == false) {
         stoptime = true;
     }
+    console.log(time);
+    ScoreArr.push(time);
+    myStorage.setItem("prevBrainScores", JSON.stringify(ScoreArr));
+    updateList();
 }
 
 function timerCycle() {
@@ -45,8 +58,8 @@ function timerCycle() {
             hr = "0" + hr;
         }
 
-        timer.innerHTML = hr + ":" + min + ":" + sec;
-
+        timer.innerHTML = min + ":" + sec;
+        time = `${min} : ${sec}`;
         setTimeout("timerCycle()", 1000);
     }
 }

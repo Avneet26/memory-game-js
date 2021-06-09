@@ -11,16 +11,31 @@
             href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+            integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+            crossorigin="anonymous"
+        />
     </head>
     <body>
+        <h1><i class="fas fa-brain"></i>BrainTrain</h1>
         <div class="btns">
             <button class="btn start-btn">Start Game</button>
         </div>
 
-        <p class="timer"></p>
+        <div class="scoreBoard">
+            <p class="timer">00:00</p>
+            <div class="scores">
+                <h3>Previous Scores</h3>
+                <div class="scoreList"></div>
+            </div>
+        </div>
+
         <div class="grid"></div>
 
         <script src="script.js"></script>
         <script src="stopwatch.js"></script>
+        <script src="scoreBoard.js"></script>
     </body>
 </html>

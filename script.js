@@ -50,7 +50,7 @@ for (let i = 0; i < 16; i++) {
     cellObj.push(cellDet);
     grid.appendChild(cell);
 
-    cell.addEventListener("click", handleCellClick);
+    cell.addEventListener("mousedown", handleCellClick);
 }
 
 console.log(cellObj);
