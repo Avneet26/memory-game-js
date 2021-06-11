@@ -1,6 +1,10 @@
 let grid = document.querySelector(".grid");
 let strtBtn = document.querySelector(".start-btn");
 let btnCont = document.querySelector(".btns");
+
+let matchAud = new Audio("sounds/mixkit-game-click-1114.wav");
+let noMatchAud = new Audio("sounds/mixkit-click-error-1110.wav");
+
 let allCells;
 let show = false;
 let gameRunning = false;
@@ -97,6 +101,7 @@ function handleCellClick(e) {
         let currElem = e.currentTarget;
         let clickedColor = currElem.getAttribute("color");
         let clickedId = currElem.getAttribute("id");
+
         //First click
         if (clickNo == 0) {
             //save first clicked elem
@@ -120,9 +125,11 @@ function handleCellClick(e) {
                 cellObj[clickedId].found = true;
                 console.log("matched");
                 clickNo = 0; //reset click counter
+                matchAud.play();
             } else {
                 currElem.style.backgroundColor = clickedColor;
                 gameRunning = false; //disable click for the time
+                noMatchAud.play();
                 setTimeout(function () {
                     firstClickElem.style.backgroundColor = "rgb(180, 180, 180)"; //after some time reset both cells
                     currElem.style.backgroundColor = "rgb(180, 180, 180)";
